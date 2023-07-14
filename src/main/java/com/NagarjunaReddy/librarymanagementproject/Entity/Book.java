@@ -8,6 +8,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @NoArgsConstructor
@@ -24,9 +26,18 @@ public class Book {
     @Enumerated(EnumType.STRING)
     private Genre genre;
 
+    private boolean isIssued;
     @ManyToOne
     @JoinColumn
-    @JsonIgnore
+//    @JsonIgnore
     Author author;
+
+    @OneToMany(mappedBy = "book",cascade = CascadeType.ALL)
+    List<Transaction> transaction = new ArrayList<>();
+
+    @ManyToOne
+    @JoinColumn
+    LibraryCard card;
+
 
 }

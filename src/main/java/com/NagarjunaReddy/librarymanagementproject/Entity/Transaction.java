@@ -1,27 +1,39 @@
 package com.NagarjunaReddy.librarymanagementproject.Entity;
-import com.NagarjunaReddy.librarymanagementproject.Enum.Department;
+
+import com.NagarjunaReddy.librarymanagementproject.Enum.TransactionStatus;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.data.annotation.CreatedDate;
+
 import javax.persistence.*;
+import java.util.Date;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
-public class Student {
+public class Transaction {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    private String name;
-    private int age;
+    private String transactionNumber;
     @Enumerated(EnumType.STRING)
-    private Department department;
-    @Column(unique = true)
-    private String email;
+    TransactionStatus transactionStatus;
 
-    @OneToOne(mappedBy = "student",cascade = CascadeType.ALL)
+    @CreatedDate
+    private Date transactionDate;
+
+    @ManyToOne
+    @JoinColumn
+    Book book;
+
+    @ManyToOne
+    @JoinColumn
     LibraryCard card;
+
+
+
 }
